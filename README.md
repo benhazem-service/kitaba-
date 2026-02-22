@@ -48,6 +48,19 @@
             display: flex;
             flex-direction: column;
             height: 100vh;
+            margin: 0;
+        }
+
+        /* Responsive Improvements */
+        @media (max-width: 768px) {
+            body {
+                overflow: auto;
+                height: auto;
+            }
+
+            .no-mobile {
+                display: none !important;
+            }
         }
 
         * {
@@ -55,6 +68,30 @@
             -moz-font-feature-settings: "lnum" !important;
             -webkit-font-feature-settings: "lnum" !important;
             font-feature-settings: "lnum" !important;
+        }
+
+        /* Scrollbar styles */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 10px;
+        }
+
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: transparent;
         }
 
         .ribbon-container {
@@ -67,6 +104,17 @@
             z-index: 100;
             flex-shrink: 0;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
+            overflow-x: auto;
+            scrollbar-width: thin;
+        }
+
+        .ribbon-container::-webkit-scrollbar {
+            height: 4px;
+        }
+
+        .ribbon-container::-webkit-scrollbar-thumb {
+            background: #e2e8f0;
+            border-radius: 10px;
         }
 
         .ribbon-group {
@@ -142,8 +190,16 @@
             z-index: 1;
             margin: auto;
             color: #1e293b !important;
-            /* ضمان بقاء النص داكناً دائماً */
             line-height: 1.6;
+            transform-origin: center top;
+            transition: transform 0.2s ease-in-out;
+        }
+
+        .paper-scale-wrapper {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            overflow: visible;
         }
 
         .a4-content {
@@ -601,46 +657,49 @@
                     يتم اختيار قالب</span>
             </div>
         </div>
-        <div class="flex items-center gap-2">
+        <div class="flex items-center gap-2 overflow-x-auto pb-1 no-scrollbar scroll-smooth flex-nowrap md:flex-wrap">
             <button id="printBtn" onclick="window.print()"
-                class="hidden bg-dark text-white px-4 py-2 rounded-lg text-xs font-bold hover:bg-slate-800 transition">طباعة</button>
+                class="hidden bg-dark text-white px-4 py-2 rounded-lg text-xs font-bold hover:bg-slate-800 transition whitespace-nowrap">طباعة</button>
             <button onclick="window.goToStats()"
-                class="bg-indigo-600 text-white px-4 py-2 rounded-lg text-xs font-bold shadow-sm hover:bg-indigo-700 transition">الإحصائيات</button>
+                class="bg-indigo-600 text-white px-4 py-2 rounded-lg text-xs font-bold shadow-sm hover:bg-indigo-700 transition whitespace-nowrap">الإحصائيات</button>
             <button onclick="window.goToCustomerList()"
-                class="bg-customers text-white px-4 py-2 rounded-lg text-xs font-bold shadow-sm hover:opacity-90 transition">السجلات</button>
+                class="bg-customers text-white px-4 py-2 rounded-lg text-xs font-bold shadow-sm hover:opacity-90 transition whitespace-nowrap">السجلات</button>
             <button onclick="window.goToLibrary()"
-                class="bg-slate-100 text-slate-600 px-4 py-2 rounded-lg text-xs font-bold border hover:bg-slate-200 transition">المكتبة</button>
+                class="bg-slate-100 text-slate-600 px-4 py-2 rounded-lg text-xs font-bold border hover:bg-slate-200 transition whitespace-nowrap">المكتبة</button>
             <button onclick="window.openWhatsAppModal()"
-                class="bg-emerald-500 text-white px-4 py-2 rounded-lg text-xs font-bold shadow-sm hover:bg-emerald-600 transition flex items-center gap-2">
+                class="bg-emerald-500 text-white px-4 py-2 rounded-lg text-xs font-bold shadow-sm hover:bg-emerald-600 transition flex items-center gap-2 whitespace-nowrap">
                 <i class="fab fa-whatsapp text-lg"></i> الواتساب
             </button>
-            <div class="h-6 w-px bg-slate-200 mx-2"></div>
+            <div class="h-6 w-px bg-slate-200 mx-1 flex-shrink-0"></div>
 
-            <button onclick="window.openSettings()" class="tool-btn hover:bg-blue-50 text-slate-500 transition"
-                title="الإعدادات">
+            <button onclick="window.openSettings()"
+                class="tool-btn hover:bg-blue-50 text-slate-500 transition flex-shrink-0" title="الإعدادات">
                 <i class="fas fa-cog text-xl"></i>
             </button>
 
-            <button onclick="window.exportToWord()" class="text-blue-600 hover:bg-blue-50 p-2 rounded-lg transition"
-                title="تصدير Word"><i class="fas fa-file-word text-xl"></i></button>
-            <button onclick="window.exportToPDF()" class="text-danger hover:bg-red-50 p-2 rounded-lg transition"
-                title="تصدير PDF"><i class="fas fa-file-pdf text-xl"></i></button>
+            <button onclick="window.exportToWord()"
+                class="text-blue-600 hover:bg-blue-50 p-2 rounded-lg transition flex-shrink-0" title="تصدير Word"><i
+                    class="fas fa-file-word text-xl"></i></button>
+            <button onclick="window.exportToPDF()"
+                class="text-danger hover:bg-red-50 p-2 rounded-lg transition flex-shrink-0" title="تصدير PDF"><i
+                    class="fas fa-file-pdf text-xl"></i></button>
             <button onclick="window.exportAllDataJSON()"
-                class="text-amber-600 hover:bg-amber-50 p-2 rounded-lg transition" title="تصدير JSON (نسخة احتياطية)">
+                class="text-amber-600 hover:bg-amber-50 p-2 rounded-lg transition flex-shrink-0"
+                title="تصدير JSON (نسخة احتياطية)">
                 <i class="fas fa-file-export text-xl"></i>
             </button>
             <button onclick="window.importAllDataJSON()"
-                class="text-emerald-600 hover:bg-emerald-50 p-2 rounded-lg transition" title="استيراد JSON (استعادة)">
+                class="text-emerald-600 hover:bg-emerald-50 p-2 rounded-lg transition flex-shrink-0"
+                title="استيراد JSON (استعادة)">
                 <i class="fas fa-file-import text-xl"></i>
             </button>
             <input type="file" id="importJsonInput" accept=".json" style="display:none"
                 onchange="window.handleJsonImport(event)">
             <button onclick="window.editCurrentModel()"
-                class="bg-slate-800 text-white px-6 py-2 rounded-xl font-bold text-sm shadow-lg hover:bg-slate-700 transition mx-1">تعديل
-                النموذج</button>
+                class="bg-slate-800 text-white px-5 py-2 rounded-xl font-bold text-xs shadow-lg hover:bg-slate-700 transition flex-shrink-0 whitespace-nowrap">تعديل</button>
             <button onclick="window.openDesignSetup()"
-                class="bg-primary text-white px-6 py-2 rounded-xl font-black text-sm shadow-lg hover:bg-blue-700 transition mx-1">+
-                مستند جديد</button>
+                class="bg-primary text-white px-5 py-2 rounded-xl font-black text-xs shadow-lg hover:bg-blue-700 transition flex-shrink-0 whitespace-nowrap">+
+                جديد</button>
         </div>
     </header>
 
@@ -725,8 +784,9 @@
     <div id="contentArea" class="flex-1 flex overflow-hidden">
 
         <!-- الرئيسية -->
-        <div id="mainPage" class="flex-1 flex overflow-hidden">
-            <aside class="w-80 bg-white border-l p-6 overflow-y-auto custom-scrollbar flex flex-col shadow-xl no-print">
+        <div id="mainPage" class="flex-1 flex flex-col md:flex-row overflow-hidden">
+            <aside
+                class="w-full md:w-80 bg-white border-l p-4 md:p-6 overflow-y-auto custom-scrollbar flex flex-col shadow-xl no-print">
                 <!-- زر إضافة وثيقة جديدة -->
                 <div class="mb-6 p-4 bg-blue-50/50 rounded-2xl border border-blue-100 flex flex-col items-center gap-3">
                     <button onclick="window.openAddModelModal()"
@@ -744,16 +804,18 @@
                     <i class="fas fa-print"></i> حفظ وأرشفة الوثيقة
                 </button>
             </aside>
-            <main class="flex-1 bg-slate-200 overflow-y-auto p-12 custom-scrollbar">
-                <div id="mainSessionContainer" class="flex flex-col items-center gap-12">
+            <main class="flex-1 bg-slate-200 overflow-y-auto p-4 md:p-12 custom-scrollbar">
+                <div id="mainSessionContainer" class="flex flex-col items-center gap-6 md:gap-12">
                     <!-- سيتم تعبئة النماذج النشطة هنا بواسطة JS -->
                 </div>
             </main>
         </div>
 
         <!-- التصميم -->
-        <div id="designPage" class="flex-1 flex overflow-hidden hidden-view">
-            <aside class="w-96 bg-white border-l shadow-2xl z-20 overflow-y-auto custom-scrollbar p-6 no-print">
+        <div id="designPage" class="flex-1 flex flex-col md:flex-row overflow-hidden hidden-view relative">
+            <aside
+                class="w-full md:w-80 bg-white border-l border-slate-100 p-6 overflow-y-auto custom-scrollbar no-print"
+                id="fillFieldsSidebar">
                 <button onclick="window.saveAndReturn()"
                     class="w-full mb-3 bg-slate-100 text-slate-600 py-3 rounded-2xl font-black text-xs hover:bg-slate-200 transition flex items-center justify-center gap-2">
                     <i class="fas fa-arrow-right"></i> الرجوع للرئيسية
@@ -820,10 +882,10 @@
 
         <!-- نافذة الإعدادات -->
         <div id="settingsModal"
-            class="fixed inset-0 z-[100] flex items-center justify-center p-4 transition-all duration-300">
+            class="fixed inset-0 z-[100] flex items-center justify-center p-0 md:p-4 transition-all duration-300">
             <div class="absolute inset-0 bg-slate-900/40 backdrop-blur-sm" onclick="window.closeSettings()"></div>
             <div
-                class="bg-white w-full max-w-4xl max-h-[90vh] rounded-[2.5rem] shadow-2xl relative z-10 overflow-hidden flex flex-col md:flex-row border border-white/20 glass-card">
+                class="bg-white w-full max-w-4xl max-h-[100vh] md:max-h-[90vh] rounded-none md:rounded-[2.5rem] shadow-2xl relative z-10 overflow-hidden flex flex-col md:flex-row border border-white/20 glass-card">
                 <!-- شريط جانبي للتنقل -->
                 <aside class="w-full md:w-64 bg-slate-50/50 border-l border-slate-100 p-8 flex flex-col gap-2">
                     <h3 class="text-xl font-black text-slate-800 mb-6 flex items-center gap-2">
@@ -1085,7 +1147,7 @@
             <div class="flex-1 overflow-y-auto custom-scrollbar px-2">
                 <div class="bg-white rounded-3xl shadow-sm border border-slate-100 overflow-hidden mb-10">
                     <div
-                        class="grid grid-cols-5 gap-4 px-8 py-4 bg-slate-100/50 border-b border-slate-100 text-[11px] font-black text-slate-500 uppercase tracking-widest">
+                        class="hidden md:grid grid-cols-5 gap-4 px-8 py-4 bg-slate-100/50 border-b border-slate-100 text-[11px] font-black text-slate-500 uppercase tracking-widest">
                         <div class="col-span-1">الاسم الكامل</div>
                         <div class="col-span-1 text-center">رقم البطاقة</div>
                         <div class="col-span-1 text-center">نوع النموذج</div>
@@ -1559,14 +1621,16 @@
                     <div class="pages-view w-full flex justify-center relative group" data-mid="${mid}">
                         <!-- زر حذف الوثيقة -->
                         <button onclick="window.removeModelFromSession('${mid}')" 
-                            class="absolute top-2 right-[calc(50%-120mm)] z-10 w-10 h-10 bg-white/80 backdrop-blur-md text-danger rounded-full shadow-lg border border-red-50 opacity-0 group-hover:opacity-100 transition-all flex items-center justify-center hover:bg-danger hover:text-white" title="إزالة هذه الوثيقة">
+                            class="absolute top-2 right-2 md:right-[calc(50%-120mm)] z-10 w-10 h-10 bg-white/80 backdrop-blur-md text-danger rounded-full shadow-lg border border-red-50 opacity-0 group-hover:opacity-100 transition-all flex items-center justify-center hover:bg-danger hover:text-white" title="إزالة هذه الوثيقة">
                             <i class="fas fa-trash-alt"></i>
                         </button>
                         
-                        <div class="a4-paper relative">
-                            <div class="absolute -top-10 left-0 bg-white shadow-sm border px-4 py-1 rounded-t-xl text-[10px] font-black text-slate-400 no-print">نموذج: ${m.name}</div>
-                            <div id="content-${mid}" class="a4-content outline-none" contenteditable="true" oninput="window.syncMultiToModel('${mid}')">
-                                ${m.htmlContent}
+                        <div class="paper-scale-wrapper">
+                            <div class="a4-paper relative">
+                                <div class="absolute -top-10 left-0 bg-white shadow-sm border px-4 py-1 rounded-t-xl text-[10px] font-black text-slate-400 no-print">نموذج: ${m.name}</div>
+                                <div id="content-${mid}" class="a4-content outline-none" contenteditable="true" oninput="window.syncMultiToModel('${mid}')">
+                                    ${m.htmlContent}
+                                </div>
                             </div>
                         </div>
                     </div>`;
@@ -1578,7 +1642,33 @@
             });
 
             document.querySelectorAll('.img-container').forEach(c => initImgControl(c));
+            window.updateViewScale();
         };
+
+        window.updateViewScale = function () {
+            const wrappers = document.querySelectorAll('.paper-scale-wrapper');
+            const isMobile = window.innerWidth <= 768;
+
+            wrappers.forEach(wrapper => {
+                const paper = wrapper.querySelector('.a4-paper');
+                if (!paper) return;
+
+                const containerWidth = wrapper.offsetWidth - (isMobile ? 20 : 80); // padding/margin
+                const paperRealWidth = 210 * 3.78; // 210mm to px (approx)
+
+                let scale = 1;
+                if (containerWidth < paperRealWidth) {
+                    scale = containerWidth / paperRealWidth;
+                }
+
+                paper.style.transform = `scale(${scale})`;
+                // تعديل ارتفاع الحاوية لتناسب الورقة المصغرة
+                const scaledHeight = (297 * 3.78) * scale + 100;
+                wrapper.style.height = isMobile && scale < 1 ? scaledHeight + 'px' : 'auto';
+            });
+        };
+
+        window.addEventListener('resize', window.updateViewScale);
 
         window.updateGlobalText = function (label, val, inputEl = null) {
             let finalVal = val;
@@ -1760,29 +1850,29 @@
                 const accentColor = rowColors[i % rowColors.length];
 
                 return `
-                <div class="grid grid-cols-5 gap-4 px-8 py-6 bg-white border-r-8 ${accentColor} hover:bg-slate-50 transition-all cursor-pointer group items-center mb-3 rounded-2xl shadow-sm hover:shadow-md" onclick="window.loadRecord('${r.id}')">
-                    <div class="col-span-1 flex flex-col">
-                        <span class="text-[10px] font-black text-slate-400 uppercase mb-1">الاسم الكامل</span>
-                        <span class="font-black text-slate-800 text-base">${r.customerName}</span>
+                <div class="flex flex-col md:grid md:grid-cols-5 gap-3 md:gap-4 px-6 md:px-8 py-4 md:py-6 bg-white border-r-8 ${accentColor} hover:bg-slate-50 transition-all cursor-pointer group items-start md:items-center mb-3 rounded-2xl shadow-sm hover:shadow-md" onclick="window.loadRecord('${r.id}')">
+                    <div class="w-full md:col-span-1 flex flex-col">
+                        <span class="text-[9px] md:text-[10px] font-black text-slate-400 uppercase mb-0.5 md:mb-1">الاسم الكامل</span>
+                        <span class="font-black text-slate-800 text-sm md:text-base">${r.customerName}</span>
                     </div>
-                    <div class="col-span-1 text-center flex flex-col">
-                        <span class="text-[10px] font-black text-slate-400 uppercase mb-1">رقم البطاقة</span>
-                        <span class="font-black text-primary text-sm bg-blue-50 py-1 rounded-lg">${r.nationalId}</span>
+                    <div class="w-full md:col-span-1 md:text-center flex flex-col">
+                        <span class="text-[9px] md:text-[10px] font-black text-slate-400 uppercase mb-0.5 md:mb-1">رقم البطاقة</span>
+                        <span class="font-black text-primary text-xs md:text-sm bg-blue-50 py-1 px-2 md:px-0 rounded-lg inline-block w-fit md:w-full">${r.nationalId}</span>
                     </div>
-                    <div class="col-span-1 text-center flex flex-col items-center">
-                        <span class="text-[10px] font-black text-slate-400 uppercase mb-1">نوع المنتج</span>
-                        <span class="bg-dark text-white px-4 py-1 rounded-full text-[10px] font-black tracking-wide">${r.modelName}</span>
+                    <div class="w-full md:col-span-1 md:text-center flex flex-col items-start md:items-center">
+                        <span class="text-[9px] md:text-[10px] font-black text-slate-400 uppercase mb-0.5 md:mb-1">نوع المنتج</span>
+                        <span class="bg-dark text-white px-3 md:px-4 py-1 rounded-full text-[9px] md:text-[10px] font-black tracking-wide">${r.modelName}</span>
                     </div>
-                    <div class="col-span-1 text-center flex flex-col">
-                        <span class="text-[10px] font-black text-slate-400 uppercase mb-1">تاريخ الحفظ</span>
-                        <span class="font-bold text-slate-500 text-[11px]">${latinDate}</span>
+                    <div class="w-full md:col-span-1 md:text-center flex flex-col">
+                        <span class="text-[9px] md:text-[10px] font-black text-slate-400 uppercase mb-0.5 md:mb-1">تاريخ الحفظ</span>
+                        <span class="font-bold text-slate-500 text-[10px] md:text-[11px]">${latinDate}</span>
                     </div>
-                    <div class="col-span-1 flex justify-end gap-3">
-                        <button onclick="event.stopPropagation(); window.deleteRecord('${r.id}')" class="bg-red-50 text-danger p-3 rounded-xl hover:bg-danger hover:text-white transition-all shadow-sm">
-                            <i class="fas fa-trash-alt"></i>
+                    <div class="w-full md:col-span-1 flex justify-end gap-2 md:gap-3 mt-2 md:mt-0 pt-2 md:pt-0 border-t md:border-t-0 border-slate-50">
+                        <button onclick="event.stopPropagation(); window.deleteRecord('${r.id}')" class="bg-red-50 text-danger p-2 md:p-3 rounded-xl hover:bg-danger hover:text-white transition-all shadow-sm">
+                            <i class="fas fa-trash-alt text-xs md:text-sm"></i>
                         </button>
-                        <div class="bg-primary/10 text-primary p-3 rounded-xl group-hover:bg-primary group-hover:text-white transition-all shadow-sm">
-                             <i class="fas fa-external-link-alt"></i>
+                        <div class="bg-primary/10 text-primary p-2 md:p-3 rounded-xl group-hover:bg-primary group-hover:text-white transition-all shadow-sm">
+                             <i class="fas fa-external-link-alt text-xs md:text-sm"></i>
                         </div>
                     </div>
                 </div>`;
