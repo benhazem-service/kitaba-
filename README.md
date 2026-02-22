@@ -48,6 +48,7 @@
             display: flex;
             flex-direction: column;
             height: 100vh;
+            height: 100dvh;
             margin: 0;
         }
 
@@ -657,7 +658,7 @@
                     يتم اختيار قالب</span>
             </div>
         </div>
-        <div class="flex items-center gap-2 overflow-x-auto pb-1 no-scrollbar scroll-smooth flex-nowrap md:flex-wrap">
+        <div class="flex items-center gap-2 overflow-x-auto pb-1 no-scrollbar scroll-smooth flex-nowrap">
             <button id="printBtn" onclick="window.print()"
                 class="hidden bg-dark text-white px-4 py-2 rounded-lg text-xs font-bold hover:bg-slate-800 transition whitespace-nowrap">طباعة</button>
             <button onclick="window.goToStats()"
@@ -815,7 +816,7 @@
         <div id="designPage" class="flex-1 flex flex-col md:flex-row overflow-hidden hidden-view relative">
             <aside
                 class="w-full md:w-80 bg-white border-l border-slate-100 p-6 overflow-y-auto custom-scrollbar no-print"
-                id="fillFieldsSidebar">
+                id="designToolsSidebar">
                 <button onclick="window.saveAndReturn()"
                     class="w-full mb-3 bg-slate-100 text-slate-600 py-3 rounded-2xl font-black text-xs hover:bg-slate-200 transition flex items-center justify-center gap-2">
                     <i class="fas fa-arrow-right"></i> الرجوع للرئيسية
@@ -1648,23 +1649,25 @@
         window.updateViewScale = function () {
             const wrappers = document.querySelectorAll('.paper-scale-wrapper');
             const isMobile = window.innerWidth <= 768;
+            const isTablet = window.innerWidth > 768 && window.innerWidth <= 1024;
 
             wrappers.forEach(wrapper => {
                 const paper = wrapper.querySelector('.a4-paper');
                 if (!paper) return;
 
-                const containerWidth = wrapper.offsetWidth - (isMobile ? 20 : 80); // padding/margin
-                const paperRealWidth = 210 * 3.78; // 210mm to px (approx)
+                const padding = isMobile ? 20 : (isTablet ? 40 : 80);
+                const containerWidth = wrapper.offsetWidth - padding;
+                const paperRealWidth = 210 * 3.78; // 210mm to px
 
                 let scale = 1;
+                // Only scale if content is wider than container
                 if (containerWidth < paperRealWidth) {
                     scale = containerWidth / paperRealWidth;
                 }
 
                 paper.style.transform = `scale(${scale})`;
-                // تعديل ارتفاع الحاوية لتناسب الورقة المصغرة
-                const scaledHeight = (297 * 3.78) * scale + 100;
-                wrapper.style.height = isMobile && scale < 1 ? scaledHeight + 'px' : 'auto';
+                const scaledHeight = (297 * 3.78) * scale + (isMobile ? 60 : 100);
+                wrapper.style.height = (scale < 1) ? scaledHeight + 'px' : 'auto';
             });
         };
 
